@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shader Playground</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="toolbar">
+    <span class="brand">Shader Playground</span>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-target="frag" role="tab">fragment.glsl</button>
+      <button class="tab" data-target="vert" role="tab">vertex.glsl</button>
+    </div>
+    <div class="actions">
+      <span id="status" class="status ok">● 就绪</span>
+      <span id="gl-info" class="gl-info"></span>
+      <button id="btn-apply" title="手动应用 (Ctrl/Cmd+S)">应用</button>
+      <button id="btn-reset" title="恢复内置默认着色器">重置默认</button>
+      <button id="btn-lose-context" title="模拟 GPU 上下文丢失">模拟上下文丢失</button>
+      <label class="toggle" title="每帧调用 gl.getError() 捕获运行时 GL 错误">
+        <input type="checkbox" id="chk-gl-error"> 帧错误检测
+      </label>
+    </div>
+  </header>
+
+  <main id="workspace">
+    <section id="editor-pane">
+      <div id="editor-wrap">
+        <pre id="gutter" aria-hidden="true"></pre>
+        <textarea id="editor" spellcheck="false" wrap="off"
+          autocapitalize="off" autocomplete="off" aria-label="GLSL 源码编辑器"></textarea>
+      </div>
+      <div id="console">
+        <div class="console-header">
+          <span>控制台</span>
+          <button id="btn-clear-console">清空</button>
+        </div>
+        <ul id="console-list"></ul>
+      </div>
+    </section>
+    <section id="preview-pane">
+      <div id="canvas-wrap">
+        <canvas id="glcanvas"></canvas>
+        <div id="context-lost-overlay" class="hidden">
+          <strong>WebGL 上下文已丢失</strong>
+          <span>等待浏览器恢复…</span>
+          <button id="btn-force-restore">尝试立即恢复</button>
+        </div>
+      </div>
+      <div id="preview-meta">
+        <span id="fps">-- FPS</span>
+        <span id="program-label">program: default</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/glsl-errors.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/default-shaders.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
