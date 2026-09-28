@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WebGL 着色器热重载工作台</title>
+    <link rel="stylesheet" href="./src/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>WebGL 着色器热重载</h1>
+          <p id="environment">正在创建 WebGL 上下文…</p>
+        </div>
+        <div class="actions" aria-label="着色器操作">
+          <button id="reloadButton" type="button">立即热重载</button>
+          <button id="fallbackButton" type="button">使用默认着色器</button>
+          <button id="linkProbeButton" type="button">模拟链接失败</button>
+          <button id="runtimeProbeButton" type="button">模拟运行时错误</button>
+          <button id="loseButton" type="button" title="通过 WEBGL_lose_context 模拟上下文丢失">模拟上下文丢失</button>
+          <button id="restoreButton" type="button" disabled>恢复上下文</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="editor-panel" aria-label="着色器编辑器">
+          <div class="panel-heading">
+            <div>
+              <h2 id="editorStage">片段着色器</h2>
+              <p>编辑后自动防抖编译；Worker 持久化到 IndexedDB。</p>
+            </div>
+            <span id="saveState" class="status-pill">未保存</span>
+          </div>
+          <div id="editor" class="code-editor" spellcheck="false">
+            <div class="gutter" aria-hidden="true"></div>
+            <textarea
+              id="shaderSource"
+              aria-label="片段着色器源码"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+            ></textarea>
+          </div>
+        </section>
+
+        <section class="preview-panel" aria-label="渲染结果">
+          <div class="panel-heading preview-heading">
+            <div>
+              <h2>渲染结果</h2>
+              <p id="pipelineState">等待程序链接</p>
+            </div>
+            <div class="badges">
+              <span id="programBadge" class="status-pill">默认</span>
+              <span id="errorModeBadge" class="status-pill hidden">运行时降级</span>
+            </div>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="glCanvas" aria-label="WebGL 渲染画布"></canvas>
+            <div id="contextOverlay" class="overlay hidden">
+              <strong>WebGL 上下文已丢失</strong>
+              <span>资源会在上下文恢复后自动重建。</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <section class="diagnostics" aria-live="polite">
+        <div class="diagnostics-heading">
+          <h2>诊断信息</h2>
+          <span id="diagnosticCount">0 条</span>
+        </div>
+        <ul id="diagnosticList" class="diagnostic-list"></ul>
+      </section>
+    </div>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
